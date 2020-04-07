@@ -1,15 +1,17 @@
 def input_students
-  puts "Please enter the names of the students and their hobby"
+  puts "Please enter the names of the students and their cohort"
   puts "To finish, just hit return twice"
   students = []
   name = gets.chomp
-  hobby = gets.chomp
+  cohort = gets.chomp
 
   while !name.empty? do
-    students << {name: name, cohort: :november, hobby: hobby, country: :England}
+    cohort = :November if cohort.empty?
+      
+    students << {name: name, cohort: cohort.to_sym, hobby: :Music, country: :England}
     puts "Now we have #{students.count} students"
     name = gets.chomp
-    hobby = gets.chomp
+    cohort = gets.chomp
   end
   students
 end

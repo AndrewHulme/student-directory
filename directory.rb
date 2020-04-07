@@ -9,7 +9,9 @@ def input_students
     cohort = :November if cohort.empty?
       
     students << {name: name, cohort: cohort.to_sym, hobby: :Music, country: :England}
-    puts "Now we have #{students.count} students"
+    
+    (students.count == 1) ? (puts "Now we have #{students.count} student") : (puts "Now we have #{students.count} students")
+    
     name = gets.chomp
     cohort = gets.chomp
   end
@@ -26,7 +28,7 @@ def print(students)
   
   while counter < students.count
     if students[counter][:name][0] == "A" && students[counter][:name].length < 12
-      puts ("#{counter + 1}: #{students[counter][:name]} - Hobby: #{students[counter][:hobby]}, Country of Origin: #{students[counter][:country]} (#{students[counter][:cohort]} cohort)").center(180)
+      puts ("#{counter + 1}: #{students[counter][:name]} - Hobby: #{students[counter][:hobby]}, Country: #{students[counter][:country]} (#{students[counter][:cohort]} cohort)").center(180)
     end
       counter += 1
   end
@@ -39,18 +41,18 @@ def print_by_cohort(students)
 
   while counter < students.count
     if students[counter][:cohort] == month.to_sym
-      puts ("#{counter + 1}: #{students[counter][:name]} - Hobby: #{students[counter][:hobby]}, Country of Origin: #{students[counter][:country]} (#{students[counter][:cohort]} cohort)").center(180)
+      puts ("#{counter + 1}: #{students[counter][:name]} - Hobby: #{students[counter][:hobby]}, Country: #{students[counter][:country]} (#{students[counter][:cohort]} cohort)").center(180)
     end
       counter += 1
   end
 end
 
 def print_footer(students)
-  puts ("Overall, we have #{students.count} great students").center(180)
+  (students.count == 1) ? (puts ("Overall, we have #{students.count} great student").center(180)) : (puts ("Overall, we have #{students.count} great students").center(180))
 end
 
 students = input_students
 print_header
-#print(students)
-print_by_cohort(students)
+print(students)
+#print_by_cohort(students)
 print_footer(students)

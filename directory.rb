@@ -7,9 +7,7 @@ def input_students
 
   while !name.empty? do
     cohort = :November if cohort.empty?
-      
     students << {name: name, cohort: cohort.to_sym, hobby: :Music, country: :England}
-    
     (students.count == 1) ? (puts "Now we have #{students.count} student") : (puts "Now we have #{students.count} students")
     
     name = gets.chomp
@@ -46,8 +44,32 @@ def print_footer(students)
   (students.count == 1) ? (puts ("Overall, we have #{students.count} great student").center(180)) : (puts ("Overall, we have #{students.count} great students").center(180))
 end
 
-students = input_students
-print_header
-print(students)
+def interactive_menu
+  students = []
+  loop do
+    # print the menu and ask the user for input
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    
+    # read input and save to variable
+    selection = gets.chomp
+    
+    # do what user has asked
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header
+        print(students)
+        print_footer(students)
+      when "9"
+        exit
+      else
+        puts "I don't know what you meant, try again"
+    end
+  end
+end
+
 #print_by_cohort(students)
-print_footer(students)
+interactive_menu

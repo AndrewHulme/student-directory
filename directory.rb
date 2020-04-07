@@ -32,11 +32,25 @@ def print(students)
   end
 end
 
+def print_by_cohort(students)
+  counter = 0
+  puts "Which cohort do you want to see?"
+  month = gets.chomp
+
+  while counter < students.count
+    if students[counter][:cohort] == month.to_sym
+      puts ("#{counter + 1}: #{students[counter][:name]} - Hobby: #{students[counter][:hobby]}, Country of Origin: #{students[counter][:country]} (#{students[counter][:cohort]} cohort)").center(180)
+    end
+      counter += 1
+  end
+end
+
 def print_footer(students)
   puts ("Overall, we have #{students.count} great students").center(180)
 end
 
 students = input_students
 print_header
-print(students)
+#print(students)
+print_by_cohort(students)
 print_footer(students)

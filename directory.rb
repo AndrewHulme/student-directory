@@ -24,26 +24,21 @@ def print_header
 end
 
 def print(students)
-  counter = 0
-  
-  while counter < students.count
-    if students[counter][:name][0] == "A" && students[counter][:name].length < 12
-      puts ("#{counter + 1}: #{students[counter][:name]} - Hobby: #{students[counter][:hobby]}, Country: #{students[counter][:country]} (#{students[counter][:cohort]} cohort)").center(180)
+  students.each_with_index do |student, index|
+    if student[:name][0] == "A" && student[:name].length < 12
+      puts ("#{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)").center(180)
     end
-      counter += 1
   end
 end
 
 def print_by_cohort(students)
-  counter = 0
   puts "Which cohort do you want to see?"
   month = gets.chomp
 
-  while counter < students.count
-    if students[counter][:cohort] == month.to_sym
-      puts ("#{counter + 1}: #{students[counter][:name]} - Hobby: #{students[counter][:hobby]}, Country: #{students[counter][:country]} (#{students[counter][:cohort]} cohort)").center(180)
+  students.each_with_index do |student, index|
+    if student[:cohort] == month.to_sym
+      puts ("#{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)").center(180)
     end
-      counter += 1
   end
 end
 

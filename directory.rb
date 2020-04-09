@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 @cmdfilename = ""
 
@@ -79,12 +80,10 @@ def save_students
   puts "What is the file you want to save to?"
   userfile = STDIN.gets.chomp
   
-  File.open(userfile, "w") do |file|
-    # iterate over the array of students
+  CSV.open(userfile, "w") do |csv|
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      csv.puts student_data
     end
   end
   
@@ -96,46 +95,22 @@ def concat_students(name, cohort)
   @students << {name: name, cohort: cohort.to_sym}
 end
 
-=begin
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    concat_students(name, cohort)
-  end
-  file.close
-  puts "Students loaded from file"
-  puts "\n"
-end
-
-def try_load_students
-  filename = ARGV.first
-  return if filename.nil?
-  
-  if File.exists?(filename)
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-  else
-    puts "Sorry, #{filename} doesn't exist."
-    exit
-  end
-end
-=end
-
 def load_students
+  
+  puts @cmdfilename
+  
   if !@cmdfilename.empty?
     filename = @cmdfilename
   else
     puts "What file do you want to load?"
-    filename = gets.chomp!
+    filename = STDIN.gets.chomp
   end
   
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      concat_students(name, cohort)
-    end
+  CSV.foreach(filename) do |row|
+    name, cohort = row
+    concat_students(name, cohort)
   end
+  
   puts "Students loaded from file"
   puts "\n"
 end
@@ -152,6 +127,8 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit
   end
+  
+  @cmdfilename = ""
 end
 
 try_load_students
